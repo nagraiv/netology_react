@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+Календарь
+===
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Создать React-компонет `Calendar` (функциональный компонент), который бы показывал текущую дату и текущий месяц, как показано на картинке:
+![Внешний вид компонента](./src/assets/preview.png)
 
-## Available Scripts
+## Пример использования
 
-In the project directory, you can run:
+```jsx
+const now = new Date(2017, 2, 8);
 
-### `npm start`
+// внутри компонента App:
+return (
+  <Calendar date={now} />
+);
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Описание компонента
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Компонент должен иметь один атрибут `date`, в котором он ожидает текущую дату, _объект_ `Date`.
 
-### `npm test`
+Компонент должен создавать DOM элемент следующей структуры:
+```html
+<div class="ui-datepicker">
+  <div class="ui-datepicker-material-header">
+    <div class="ui-datepicker-material-day">Среда</div>
+    <div class="ui-datepicker-material-date">
+      <div class="ui-datepicker-material-day-num">8</div>
+      <div class="ui-datepicker-material-month">Марта</div>
+      <div class="ui-datepicker-material-year">2017</div>
+    </div>
+  </div>
+  <div class="ui-datepicker-header">
+    <div class="ui-datepicker-title">
+      <span class="ui-datepicker-month">Март</span>&nbsp;<span class="ui-datepicker-year">2017</span>
+    </div>
+  </div>
+  <table class="ui-datepicker-calendar">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col class="ui-datepicker-week-end">
+      <col class="ui-datepicker-week-end">
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col" title="Понедельник">Пн</th>
+        <th scope="col" title="Вторник">Вт</th>
+        <th scope="col" title="Среда">Ср</th>
+        <th scope="col" title="Четверг">Чт</th>
+        <th scope="col" title="Пятница">Пт</th>
+        <th scope="col" title="Суббота">Сб</th>
+        <th scope="col" title="Воскресенье">Вс</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ui-datepicker-other-month">27</td>
+        <td class="ui-datepicker-other-month">28</td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>7</td>
+        <td class="ui-datepicker-today">8</td>
+        <td>9</td>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+      </tr>
+      <!-- остальные недели -->
+    </tbody>
+  </table>
+</div>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Дата, переданная в атрибуте `date`, должна быть выделена классом `ui-datepicker-today`.
 
-### `npm run build`
+Если месяц начинается не с понедельника, то необходимо показать даты предыдущего месяца в этой неделе и пометить их классом `ui-datepicker-other-month`. Аналогично, если месяц заканчивается не в воскресенье, то неделю нужно добить датами следующего месяца и так же их пометить классом `ui-datepicker-other-month`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+День недели на русском языке необходимо поместить в тег `div.ui-datepicker-material-day`, дату в `div.ui-datepicker-material-day-num`, месяц на русском языке в родительном падеже в тег `div.ui-datepicker-material-month`, год в тег `div.ui-datepicker-material-year`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Также текущий месяц на русском языке в именительном падеже необходимо поместить в тег `span.ui-datepicker-month`, а год в тег `span.ui-datepicker-year`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Реализация
 
-### `npm run eject`
+При необходимости можете воспользоваться библиотекой Moment.js, установив её через npm, не забудьте, что это не dev-зависимость.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Используйте расположенный в этом каталоге CSS-файл для стилизации.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Моё решение
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Функциональный компонент `Calendar` создан в `./src/components/Calendar.js`
+  Атрибут date типизирован как экземпляр класса Date через PropTypes.instanceOf
+* Вся логика рассчёта календаря вынесена в `./src/logic/createCalendarData.js`
+  Используется библиотека Moments.js
